@@ -1,0 +1,28 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block body_block %}
+
+<pre>
+<h1 align="center"> Profile Details </h1>
+ {% for i in user_details %}<h2>
+              Name            :  {{i.user}}
+
+              Phone Number    :  {{i.PhoneNumber}}
+
+              Qualification   :  {{i.qualification}}
+
+              Subjects        :  {{i.subjects}}
+
+              Percentage      :  {{i.percentage}}
+
+              Description     :  {{i.Description}}               {% endfor %}
+  {% for i in hobbies %}
+              Hobbies         :  {{i.hobby}}
+  {% endfor %}
+              Profile Picture
+  {% for i in user_details %}
+                 <img src="{{ i.profile_pic.url }}" width=240>
+{% endfor %}
+</h2>
+</pre>
+{% endblock %}

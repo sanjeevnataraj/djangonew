@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+	<meta charset="utf-8">
+	<title>First Website</title>
+
+	<style>
+	.container{
+		font-size: 23px;
+	}
+
+	</style>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+<body>
+
+  <div class="container">
+		<nav class="navbar navbar-inverse">
+ <div class="container-fluid">
+	 <ul class="nav navbar-nav">
+		 <li class="active"><a href="{% url 'index' %}">Home</a></li>
+     {% if user.is_authenticated %}
+		 	<li><a href="{% url 'profile_page' %}">Profile</a></li>
+			<li><a href="{% url 'student_edit_form'  %}">Edit profile </a></li>
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+     {% else %}
+     <li><a href="{% url 'registartion_page' %}">Register</a></li>
+      <li><a class="navbar-link" href="{% url 'Login_page' %}">Login</a></li>
+     {% endif %}
+	 </ul>
+ </div>
+</nav>
+{% block body_block %}
+    {# Anything outside of this will be inherited if you use extend.#}
+    {% endblock %}
+  </div>
+</body>
+</html>

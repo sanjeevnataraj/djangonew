@@ -1,0 +1,141 @@
+{% extends 'basic.html' %}
+{% block body_block %}
+
+
+{% block extra_head %}
+
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <style>
+    * {
+      .border-radius(3);
+    }
+
+    #field {
+        margin-bottom:20px;
+    }
+
+    .form-control {
+      size:9px;
+      width:30%;
+    }
+
+    #b1{
+
+      background-color: green;
+      top:30px;
+    }
+    </style>
+
+    <script>
+
+    $(document).ready(function(){
+        var next = 1;
+        $(".add-more").click(function(e){
+            e.preventDefault();
+            var addto = "#field" + next;
+            var addRemove = "#field" + (next);
+            next = next + 1;
+            var newIn = '<input autocomplete="off" class="input" id="field' + next + '" name="field' + next + '" type="text">';
+            var newInput = $(newIn);
+            var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+            var removeButton = $(removeBtn);
+            $(addto).after(newInput);
+            $(addRemove).after(removeButton);
+            $("#field" + next).attr('data-source',$(addto).attr('data-source'));
+            $("#count").val(next);
+
+                $('.remove-me').click(function(e){
+                    e.preventDefault();
+                    var fieldNum = this.id.charAt(this.id.length-1);
+                    var fieldID = "#field" + fieldNum;
+                    $(this).remove();
+                    $(fieldID).remove();
+                });
+        });
+
+
+
+    });
+    </script>
+
+
+
+
+
+</script>
+{% endblock %}
+
+<div class="jumbotron">
+  {% csrf_token %}
+
+  {% if registered %}
+    <h1>Thank you for registering!</h1>
+  {% else %}
+  {% if h %}
+    <h2>Register Here!</h2>
+    {% else %}
+    <h2>Update Profile</h2>
+    {% endif %}
+  <form method="post" enctype="multipart/form-data" >
+  {% csrf_token %}
+  <div id ="form">
+  {% if h %}
+  <label forname="Userrname"> Username  </label>
+  {{ signup_detail.username }}
+  <p><font color="red">{{ form.name.errors }}</font></p>
+  <br>
+  <label forname="Emailid"> Email_id </label>
+  {{ signup_detail.email }}
+  <p><font color="red">{{ form.email.errors }}</font></p>
+  <br>
+  <label forname="password"> Password</label>
+  {{ signup_detail.password }}
+  <br><br>
+{% endif %}
+  <label forname="phonenumber"> PhoneNumber</label>
+  {{ student_detail.PhoneNumber }}
+  <br><br>
+  <label forname="qualification"> Qualification </label>
+  {{ student_detail.qualification }}
+  <br><br>
+  <label forname="subject"> Subjects </label>
+  {{ student_detail.subjects }}
+  <br><br>
+  <label forname="percentage"> Percentage </label>
+  {{ student_detail.percentage }}
+  <br><br>
+
+  <label forname="Description">Description</label>
+  {{ student_detail.Description }}
+
+  <br>
+  <br>
+
+  <div class="container">
+<div class="row">
+  <input type="hidden" name="count" value="1" />
+      <div class="control-group" id="fields">
+          <div class="controls" id="profs">
+              <form class="input-append">
+                  <div id="field"><label>Hobbies</label> <div class="input" id="field1"  data-items="8"/>{{hobbies.hobby}}</div>  <button id="b1" class="btn add-more" type="button">+</button></div>
+              </form>
+          <br>
+          <small>Press + to add another form field :)</small>
+          </div>
+      </div>
+</div>
+</div>
+    <br>
+  <br>
+  <label forname="hobby">profile_pic</label>{{ student_detail.profile_pic }}
+  <br>
+  <br>
+  <input type="submit" class="btn btn-primary">
+  </form>
+{% endif %}
+</div>
+{% endblock %}
+
+<!--<input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="Type something" data-items="8"/>
+<div class="input" id="field1"  data-items="8"/>-->
